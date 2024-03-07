@@ -10,6 +10,7 @@ use App\Services\Domain\Order\CreateOrderService;
 use App\Services\Domain\Order\Exceptions\OrderBelowMinimumTotalException;
 use App\Services\Domain\Order\Exceptions\ProductNotFoundException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
@@ -25,7 +26,7 @@ class GetOrderController extends BaseController
     }
 
     // Didn't use directly the model here ($id) to benefit from hydration and caching later if you want
-    public function __invoke(int $id): JsonResponse
+    public function __invoke(Request $request, int $id): JsonResponse
     {
         try {
             $order = $this->orderService->findById($id);
@@ -37,6 +38,7 @@ class GetOrderController extends BaseController
             }
 
             return $this->withSuccess([
+              'user' => $request->user(),
               'order' => $order,
             ]);
         } catch (Throwable $e) {
