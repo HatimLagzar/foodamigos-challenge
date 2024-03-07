@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Stack } from '@mui/material';
 import authService from '../../app/services/auth/AuthService.js';
 
-function Navbar({ isLoggedIn, setIsLoggedIn, setOpenLoginModal, setOpenRegisterModal }) {
+function Navbar({ isLoggedIn, setIsLoggedIn, setOpenLoginModal, setOpenRegisterModal, setOpenBasket, items }) {
   function handleLogout() {
     setIsLoggedIn(false);
     authService.logout();
@@ -31,6 +31,9 @@ function Navbar({ isLoggedIn, setIsLoggedIn, setOpenLoginModal, setOpenRegisterM
                   onClick={handleLogout}>Logout</Button>
         </>
     }
+    <Button variant={'contained'} onClick={() => setOpenBasket(true)}>
+      Open Basket
+    </Button>
   </Stack>;
 }
 

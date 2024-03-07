@@ -13,8 +13,8 @@ function App() {
   );
 
   const [itemsInBasket, setItemsInBasket] = useState([]);
-  const [openLoginModal, setOpenBasket] = useState(false);
-  const [openBasket, setOpenLoginModal] = useState(false);
+  const [openBasket, setOpenBasket] = useState(false);
+  const [openLoginModal, setOpenLoginModal] = useState(false);
   const [openRegisterModal, setOpenRegisterModal] = useState(false);
 
   useEffect(() => {
@@ -44,6 +44,8 @@ function App() {
 
       <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}
               setOpenRegisterModal={setOpenRegisterModal}
+              items={itemsInBasket}
+              setOpenBasket={setOpenBasket}
               setOpenLoginModal={setOpenLoginModal}/>
 
       <BrowserRouter>

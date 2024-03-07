@@ -37,8 +37,6 @@ function LoginModal({ open, handleClose, setIsLoggedIn }) {
   return <Modal
     open={open}
     onClose={handleClose}
-    aria-labelledby="modal-modal-title"
-    aria-describedby="modal-modal-description"
   >
     <Stack direction={'row'} justifyContent={'center'} alignItems={'center'}>
       <Stack gap={'24px'} sx={{

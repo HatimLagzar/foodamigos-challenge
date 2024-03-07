@@ -9,7 +9,10 @@ import {
 
 function ProductItem({ product, itemsInBasket, setItemsInBasket }) {
   const handleAddToBasket = () => {
-    const newData = [...itemsInBasket, product];
+    const newData = [...itemsInBasket, {
+      ...product,
+      quantity: 1,
+    }];
     setItemsInBasket(newData);
     localStorage.setItem('basket', JSON.stringify(newData));
   };
