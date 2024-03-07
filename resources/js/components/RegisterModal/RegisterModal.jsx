@@ -11,8 +11,6 @@ import registerService from '../../app/services/auth/RegisterService.js';
 import toastr from 'toastr';
 
 function RegisterModal({ open, handleClose, handleOpenLogin }) {
-  const inputStyle = {};
-
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
@@ -73,16 +71,16 @@ function RegisterModal({ open, handleClose, handleOpenLogin }) {
             <TextField size={'small'} name={'name'} label={'Name'}
                        onChange={handleNameChange}
                        value={name}
-                       sx={inputStyle} fullWidth required/>
+                       fullWidth required/>
             <TextField size={'small'} name={'phone_number'}
                        onChange={handlePhoneNumberChange}
                        value={phoneNumber}
-                       label={'Phone Number'} sx={inputStyle} fullWidth
+                       label={'Phone Number'} fullWidth
                        required/>
             <TextField size={'small'} name={'password'} label={'Password'}
                        value={password}
                        onChange={handlePasswordChange}
-                       type={'password'} sx={inputStyle} fullWidth required/>
+                       type={'password'} fullWidth required/>
 
             <Button variant={'contained'} type={'submit'} disabled={isLoading}>Create
               Account</Button>
