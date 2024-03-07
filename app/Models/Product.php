@@ -14,6 +14,7 @@ class Product extends Model
     public const PRICE_COLUMN = 'price';
     public const DESCRIPTION_COLUMN = 'description';
 
+    public const CREATED_AT_COLUMN = 'created_at';
 
     protected $fillable = [
       self::NAME_COLUMN,
