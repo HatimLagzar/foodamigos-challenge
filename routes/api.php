@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\Orders\GetOrderController;
 use App\Http\Controllers\Api\Orders\StoreOrderController;
 use App\Http\Controllers\Api\Products\IndexController;
 use Illuminate\Http\Request;
@@ -28,5 +29,6 @@ Route::post('login', LoginController::class);
 Route::get('products', IndexController::class);
 
 Route::prefix('orders')->middleware('auth:sanctum')->group(function () {
+    Route::get('{id}', GetOrderController::class);
     Route::post('/', StoreOrderController::class);
 });

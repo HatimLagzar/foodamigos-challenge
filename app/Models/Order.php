@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,5 +26,11 @@ class Order extends Model
     {
         return $this->getAttribute(self::ID_COLUMN);
     }
+
+    public function setItems(Collection $items): void
+    {
+        $this->items = $items;
+    }
+
 
 }

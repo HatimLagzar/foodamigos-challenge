@@ -20,4 +20,9 @@ class OrderRepository
             ->update($attributes) > 0;
     }
 
+    public function findById(int $id): ?Order
+    {
+        return Order::find($id);
+    }
+
 }
