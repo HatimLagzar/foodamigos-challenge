@@ -5,19 +5,35 @@ import HomePage from '../pages/Home/HomePage.jsx';
 import Navbar from './Navbar/Navbar.jsx';
 import LoginModal from './LoginModal/LoginModal.jsx';
 import RegisterModal from './RegisterModal/RegisterModal.jsx';
+import Basket from './Basket/Basket.jsx';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
-    authService.hasBeenAuthenticated());
-  const [openLoginModal, setOpenLoginModal] = useState(false);
+    authService.hasBeenAuthenticated(),
+  );
+
+  const [itemsInBasket, setItemsInBasket] = useState([]);
+  const [openLoginModal, setOpenBasket] = useState(false);
+  const [openBasket, setOpenLoginModal] = useState(false);
   const [openRegisterModal, setOpenRegisterModal] = useState(false);
 
   useEffect(() => {
     setIsLoggedIn(authService.hasBeenAuthenticated());
   }, []);
 
+  useEffect(() => {
+    if (!localStorage.getItem('basket')) {
+      return;
+    }
+
+    setItemsInBasket(JSON.parse(localStorage.getItem('basket')));
+  }, []);
+
   return (
     <>
+      <Basket open={openBasket} handleClose={() => setOpenBasket(false)}
+              items={itemsInBasket} setItems={setItemsInBasket}/>
+
       <LoginModal open={openLoginModal}
                   setIsLoggedIn={setIsLoggedIn}
                   handleClose={() => setOpenLoginModal(false)}/>
@@ -33,6 +49,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path={'/'} element={<HomePage isLoggedIn={isLoggedIn}
+                                               itemsInBasket={itemsInBasket}
+                                               setItemsInBasket={setItemsInBasket}
                                                setIsLoggedIn={setIsLoggedIn}/>}/>
           <Route element={<h1>404 Not Found!</h1>}/>
         </Routes>
