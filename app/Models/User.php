@@ -50,4 +50,9 @@ class User extends Authenticatable {
         self::UPDATED_AT_COLUMN => 'datetime',
         self::PASSWORD_COLUMN => 'hashed',
     ];
+
+    public function getId(): int
+    {
+        return $this->getAttribute(self::ID_COLUMN);
+    }
 }

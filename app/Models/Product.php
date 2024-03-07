@@ -9,6 +9,7 @@ class Product extends Model
 {
     use HasFactory;
 
+    public const ID_COLUMN = 'id';
     public const NAME_COLUMN = 'name';
     public const PRICE_COLUMN = 'price';
     public const DESCRIPTION_COLUMN = 'description';
@@ -20,4 +21,15 @@ class Product extends Model
       self::PRICE_COLUMN,
       self::DESCRIPTION_COLUMN,
     ];
+
+    public function getId(): int
+    {
+        return $this->getAttribute(self::ID_COLUMN);
+    }
+
+    public function getPrice(): float
+    {
+        return $this->getAttribute(self::PRICE_COLUMN);
+    }
+
 }

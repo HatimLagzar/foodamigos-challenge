@@ -1,7 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Modal, Stack, TextField, Typography } from '@mui/material';
+import { createOrder } from '../../app/api/order/orderApi.js';
+import toastr from 'toastr';
 
 function Basket({ open, handleClose, items, setItems }) {
+  const [notes, setNotes] = useState('');
+
   useEffect(() => {
     if (items.length === 0) {
       handleClose();
@@ -36,6 +40,22 @@ function Basket({ open, handleClose, items, setItems }) {
     ]);
   };
 
+  const handleOrder = () => {
+    const formData = new FormData();
+    formData.set('notes', notes);
+    items.forEach((item, index) => {
+      formData.set(`ids[${index}]`, item.id);
+      formData.set(`quantities[${index}]`, item.quantity);
+    })
+
+    createOrder(localStorage.getItem('authToken'), formData)
+      .then((response) => {
+        toastr.success(response.data.message);
+        setItems([]);
+        handleClose();
+      });
+  };
+
   return <>
     <Modal open={open} onClose={handleClose}>
       <Stack direction={'row'} justifyContent={'center'} alignItems={'center'}>
@@ -53,7 +73,8 @@ function Basket({ open, handleClose, items, setItems }) {
                 <TextField type={'number'}
                            size={'small'}
                            label={'Quantity'}
-                           onChange={(e) => handleUpdateQuantity(item, e.currentTarget.value)}
+                           onChange={(e) => handleUpdateQuantity(item,
+                             e.currentTarget.value)}
                            value={item.quantity}/>
                 <Button variant={'outlined'} type={'small'}
                         onClick={() => handleRemoveFromBasket(
@@ -62,8 +83,15 @@ function Basket({ open, handleClose, items, setItems }) {
             })
           }
 
-          <Button variant={'contained'} type={'small'}
-                  onClick={() => handleClose()}>Close</Button>
+          <TextField label={'Notes'} value={notes}
+                     onChange={e => setNotes(e.currentTarget.value)} multiline/>
+
+          <Stack direction={'row'} gap={'8px'}>
+            <Button variant={'contained'} type={'small'}
+                    onClick={handleOrder}>Order</Button>
+            <Button variant={'outlined'} type={'small'}
+                    onClick={() => handleClose()}>Close</Button>
+          </Stack>
         </Stack>
       </Stack>
     </Modal>
