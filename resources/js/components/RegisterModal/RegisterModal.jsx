@@ -69,12 +69,15 @@ function RegisterModal({ open, handleClose, handleOpenLogin }) {
           <Stack direction={'column'} gap={'16px'}>
             <TextField size={'small'} name={'name'} label={'Name'}
                        onChange={handleNameChange}
+                       value={name}
                        sx={inputStyle} fullWidth required/>
             <TextField size={'small'} name={'phone_number'}
                        onChange={handlePhoneNumberChange}
+                       value={phoneNumber}
                        label={'Phone Number'} sx={inputStyle} fullWidth
                        required/>
             <TextField size={'small'} name={'password'} label={'Password'}
+                       value={password}
                        onChange={handlePasswordChange}
                        type={'password'} sx={inputStyle} fullWidth required/>
 
