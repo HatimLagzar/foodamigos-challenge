@@ -20,7 +20,6 @@ class ProductFactory extends Factory
     {
         return [
           Product::NAME_COLUMN => $this->faker->name,
-          Product::THUMBNAIL_COLUMN => $this->faker->imageUrl(),
           Product::PRICE_COLUMN => $this->faker->numberBetween(
             3 * 1000,
             5 * 1000
