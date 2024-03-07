@@ -34,6 +34,6 @@ class LoginService {
 
         $user = $this->userService->findByPhoneNumber($phoneNumber);
 
-        return $user->createToken('auth')->plainTextToken;
+        return $user->createToken('auth', ['*'], now()->addDay())->plainTextToken;
     }
 }

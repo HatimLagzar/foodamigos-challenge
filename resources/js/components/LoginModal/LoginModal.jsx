@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import authService from '../../app/services/auth/AuthService.js';
 
-function LoginModal({ open, handleClose }) {
+function LoginModal({ open, handleClose, setIsLoggedIn }) {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -19,6 +19,9 @@ function LoginModal({ open, handleClose }) {
 
     authService.login(phoneNumber, password).then((response) => {
       authService.saveToken(response.data.token);
+      setPhoneNumber('');
+      setPassword('');
+      setIsLoggedIn(true);
       handleClose();
     });
   }

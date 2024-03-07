@@ -26,6 +26,9 @@ function RegisterModal({ open, handleClose, handleOpenLogin }) {
     registerService.register(name, phoneNumber, password).then((response) => {
       toastr.success(response.data.message);
       setIsLoading(false);
+      setName('');
+      setPhoneNumber('');
+      setPassword('');
       handleClose();
       handleOpenLogin();
     }).catch((error) => {
