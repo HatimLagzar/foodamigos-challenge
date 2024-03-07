@@ -1,17 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Routes, Router, Route, BrowserRouter } from 'react-router-dom';
+import authService from '../app/services/auth/AuthService.js';
+import HomePage from '../pages/Home/HomePage.jsx';
 
 function App() {
+  useEffect(() => {
+    if (authService.isExpired() === false) {
+      const token = authService.getToken();
+      authService.refreshToken(token).then((response) => {
+        if (response.status !== 200 || !response) {
+          authService.logout();
+
+          return;
+        }
+
+        authService.saveToken(response.data.token);
+      });
+    }
+  });
+
   return (
-    <div className="container">
-      <div className="row justify-content-center">
-        <div className="col-md-8">
-          <div className="card">
-            <div className="card-header">Example Component</div>
-            <div className="card-body">I'm an example component!</div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path={'/'} element={<HomePage/>}/>
+        <Route element={<h1>404 Not Found!</h1>}/>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

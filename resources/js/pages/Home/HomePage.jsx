@@ -12,6 +12,7 @@ function HomePage() {
                 handleClose={() => setOpenLoginModal(false)}/>
 
     <RegisterModal open={openRegisterModal}
+                   handleOpenLogin={() => setOpenLoginModal(true)}
                    handleClose={() => setOpenRegisterModal(false)}/>
 
     <Stack
