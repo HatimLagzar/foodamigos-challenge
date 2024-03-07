@@ -16,6 +16,7 @@ class User extends Authenticatable {
     public const PHONE_VERIFIED_AT_COLUMN = 'phone_verified_at';
     public const NAME_COLUMN = 'name';
     public const PASSWORD_COLUMN = 'password';
+    public const ADDRESS_COLUMN = 'address';
     public const CREATED_AT_COLUMN = 'created_at';
     public const UPDATED_AT_COLUMN = 'udpated_at';
 
@@ -28,6 +29,7 @@ class User extends Authenticatable {
         self::NAME_COLUMN,
         self::PHONE_NUMBER_COLUMN,
         self::PASSWORD_COLUMN,
+        self::ADDRESS_COLUMN,
     ];
 
     /**

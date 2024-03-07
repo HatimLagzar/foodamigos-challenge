@@ -36,6 +36,7 @@ class UserService
             User::NAME_COLUMN,
             User::PHONE_NUMBER_COLUMN,
             User::PASSWORD_COLUMN,
+            User::ADDRESS_COLUMN,
         ]);
 
         return $this->userRepository->create($attributes);

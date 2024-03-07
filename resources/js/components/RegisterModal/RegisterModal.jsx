@@ -12,6 +12,7 @@ import toastr from 'toastr';
 
 function RegisterModal({ open, handleClose, handleOpenLogin }) {
   const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -21,12 +22,13 @@ function RegisterModal({ open, handleClose, handleOpenLogin }) {
 
     setIsLoading(true);
 
-    registerService.register(name, phoneNumber, password).then((response) => {
+    registerService.register(name, phoneNumber, password, address).then((response) => {
       toastr.success(response.data.message);
       setIsLoading(false);
       setName('');
       setPhoneNumber('');
       setPassword('');
+      setAddress('');
       handleClose();
       handleOpenLogin();
     }).catch((error) => {
@@ -40,6 +42,10 @@ function RegisterModal({ open, handleClose, handleOpenLogin }) {
 
   function handleNameChange(e) {
     setName(e.currentTarget.value);
+  }
+
+  function handleAddressChange(e) {
+    setAddress(e.currentTarget.value);
   }
 
   function handlePhoneNumberChange(e) {
@@ -81,6 +87,10 @@ function RegisterModal({ open, handleClose, handleOpenLogin }) {
                        value={password}
                        onChange={handlePasswordChange}
                        type={'password'} fullWidth required/>
+            <TextField size={'small'} name={'address'} label={'Address'}
+                       onChange={handleAddressChange}
+                       value={address}
+                       fullWidth required/>
 
             <Button variant={'contained'} type={'submit'} disabled={isLoading}>Create
               Account</Button>

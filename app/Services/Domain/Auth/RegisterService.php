@@ -25,11 +25,13 @@ class RegisterService
     public function register(
       string $name,
       string $phoneNumber,
-      string $password
+      string $password,
+      string $address,
     ): User {
         $name = htmlspecialchars($name);
         $phoneNumber = str_replace(' ', '', $phoneNumber);
-        $password = htmlspecialchars($password);
+        $password = $password;
+        $address = htmlspecialchars($address);
 
         $existingAccount = $this->userService->findByPhoneNumber($phoneNumber);
         if ($existingAccount instanceof User) {
@@ -40,6 +42,7 @@ class RegisterService
           User::NAME_COLUMN => $name,
           User::PHONE_NUMBER_COLUMN => $phoneNumber,
           User::PASSWORD_COLUMN => Hash::make($password),
+          User::ADDRESS_COLUMN => $address,
         ]);
     }
 
