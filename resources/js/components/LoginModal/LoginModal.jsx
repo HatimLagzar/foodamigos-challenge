@@ -1,7 +1,36 @@
-import React from 'react';
-import { Box, Button, Modal, Stack, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import {
+  Box,
+  Button,
+  Modal,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
+import authService from '../../app/services/auth/AuthService.js';
 
 function LoginModal({ open, handleClose }) {
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    authService.login(phoneNumber, password).then((response) => {
+      authService.saveToken(response.data.token);
+      handleClose();
+    });
+  }
+
+  function handlePhoneNumberChange(e) {
+    setPhoneNumber(e.currentTarget.value);
+  }
+
+  function handlePasswordChange(e) {
+    setPassword(e.currentTarget.value);
+  }
+
   return <Modal
     open={open}
     onClose={handleClose}
@@ -9,21 +38,34 @@ function LoginModal({ open, handleClose }) {
     aria-describedby="modal-modal-description"
   >
     <Stack direction={'row'} justifyContent={'center'} alignItems={'center'}>
-      <Box sx={{
+      <Stack gap={'24px'} sx={{
         width: '500px',
         overflow: 'hidden',
-        backgroundColor: '#FFF',
+        backgroundColor: '#fff',
         m: 10,
         p: 2,
       }}>
         <Typography variant={'h5'}>Login</Typography>
 
-        <form>
+        <form onSubmit={handleSubmit}>
+          <Stack direction={'column'} gap={'16px'}>
+            <TextField size={'small'} name={'phone_number'}
+                       onChange={handlePhoneNumberChange}
+                       value={phoneNumber}
+                       label={'Phone Number'} fullWidth
+                       required/>
+            <TextField size={'small'} name={'password'} label={'Password'}
+                       onChange={handlePasswordChange}
+                       value={password}
+                       type={'password'} fullWidth required/>
 
+            <Button variant={'contained'} type={'submit'}
+                    disabled={isLoading}>Login</Button>
+          </Stack>
         </form>
 
         <Button variant={'outlined'} onClick={handleClose}>Close</Button>
-      </Box>
+      </Stack>
     </Stack>
   </Modal>;
 }
