@@ -18,5 +18,7 @@ export const createOrder = (authToken, formData) => {
     if (error.response && error.response.status === 500) {
       toastr.error(error.response.data.message);
     }
+
+    throw error;
   });
 }

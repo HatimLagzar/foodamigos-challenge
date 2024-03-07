@@ -46,13 +46,20 @@ function Basket({ open, handleClose, items, setItems }) {
     items.forEach((item, index) => {
       formData.set(`ids[${index}]`, item.id);
       formData.set(`quantities[${index}]`, item.quantity);
-    })
+    });
 
     createOrder(localStorage.getItem('authToken'), formData)
       .then((response) => {
         toastr.success(response.data.message);
         setItems([]);
         handleClose();
+      })
+      .catch(error => {
+        if (error.response && error.response.status === 422) {
+          toastr.error(error.response.data.message);
+
+          return error;
+        }
       });
   };
 

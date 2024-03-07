@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Orders;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\Order\StoreOrderRequest;
 use App\Services\Domain\Order\CreateOrderService;
+use App\Services\Domain\Order\Exceptions\OrderBelowMinimumTotalException;
 use App\Services\Domain\Order\Exceptions\ProductNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
@@ -34,6 +35,8 @@ class StoreOrderController extends BaseController
             return $this->withSuccess([
               'message' => 'Order created successfully.',
             ]);
+        } catch (OrderBelowMinimumTotalException $e) {
+            return $this->withError('Minumum order total 15 EUR not reached, please add more products to your basket!', Response::HTTP_UNPROCESSABLE_ENTITY);
         } catch (ProductNotFoundException $e) {
             return $this->withError('One of the product on the basket wasn\'t found!', Response::HTTP_NOT_FOUND);
         } catch (Throwable $e) {

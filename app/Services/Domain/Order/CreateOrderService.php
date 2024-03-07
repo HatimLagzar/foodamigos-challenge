@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Services\Core\Order\OrderService;
 use App\Services\Core\OrderItem\OrderItemService;
 use App\Services\Core\Product\ProductService;
+use App\Services\Domain\Order\Exceptions\OrderBelowMinimumTotalException;
 use App\Services\Domain\Order\Exceptions\ProductNotFoundException;
 
 class CreateOrderService
@@ -33,11 +34,24 @@ class CreateOrderService
 
     /**
      * @throws ProductNotFoundException
+     * @throws \App\Services\Domain\Order\Exceptions\OrderBelowMinimumTotalException
      */
     public function create(User $user, array $productIds, array $quantities, ?string $notes): bool
     {
         $order = $this->orderService->create([Order::USER_ID_COLUMN => $user->getId(), Order::NOTES_COLUMN => $notes, Order::TOTAL_COLUMN => 0]);
         $total = 0;
+        foreach ($productIds as $index => $productId) {
+            $product = $this->productService->findById($productId);
+            if (!$product instanceof Product) {
+                throw new ProductNotFoundException();
+            }
+
+            $total += $product->getPrice();
+        }
+
+        if ($total < 15) {
+            throw new OrderBelowMinimumTotalException();
+        }
 
         foreach ($productIds as $index => $productId) {
             $quantity = $quantities[$index];
