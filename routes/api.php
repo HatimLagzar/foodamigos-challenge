@@ -25,3 +25,7 @@ Route::post('register', RegisterController::class);
 Route::post('login', LoginController::class);
 
 Route::get('products', IndexController::class);
+
+Route::prefix('orders')->middleware('auth:sanctum')->group(function () {
+    Route::post('/', StoreOrderController::class);
+});

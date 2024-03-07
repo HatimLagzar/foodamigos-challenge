@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Api\BaseController;
-use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Services\Domain\Auth\Exceptions\EmailAlreadyInUseException;
 use App\Services\Domain\Auth\Exceptions\PhoneNumberAlreadyUsedException;
 use App\Services\Domain\Auth\RegisterService;

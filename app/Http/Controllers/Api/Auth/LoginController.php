@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Api\BaseController;
-use App\Http\Requests\LoginRequest;
-use App\Models\User;
-use App\Services\Core\User\UserService;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Services\Domain\Auth\Exceptions\IncorrectCredentialsException;
 use App\Services\Domain\Auth\LoginService;
 use Illuminate\Http\JsonResponse;
