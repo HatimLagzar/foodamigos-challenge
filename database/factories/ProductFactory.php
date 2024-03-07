@@ -20,9 +20,10 @@ class ProductFactory extends Factory
     {
         return [
           Product::NAME_COLUMN => $this->faker->name,
-          Product::PRICE_COLUMN => $this->faker->numberBetween(
-            3 * 1000,
-            5 * 1000
+          Product::PRICE_COLUMN => $this->faker->randomFloat(
+            2,
+            3,
+            5,
           ),
           Product::DESCRIPTION_COLUMN => $this->faker->paragraph,
         ];

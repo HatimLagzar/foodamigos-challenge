@@ -26,8 +26,7 @@ function ProductItem({ product, itemsInBasket, setItemsInBasket }) {
   return <Card sx={{ width: '20%' }}>
     <CardContent>
       <Typography variant={'h6'}>{product.name}</Typography>
-      <Typography variant={'body2'}>{(product.price / 1000).toFixed(
-        2)} EUR</Typography>
+      <Typography variant={'body2'}>{product.price} EUR</Typography>
       <Typography variant={'body2'}>{product.description}</Typography>
     </CardContent>
     <CardActions>
