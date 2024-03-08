@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Modal, Stack, TextField, Typography } from '@mui/material';
-import { createOrder } from '../../app/api/order/orderApi.js';
+import React, {useEffect, useState} from 'react';
+import {Button, Modal, Stack, TextField, Typography} from '@mui/material';
+import {createOrder} from '../../app/api/order/orderApi.js';
 import toastr from 'toastr';
 
-function Basket({ open, handleClose, items, setItems }) {
+function Basket({open, handleClose, items, setItems, setOpenLoginModal, isLoggedIn}) {
   const [notes, setNotes] = useState('');
 
   useEffect(() => {
@@ -41,6 +41,12 @@ function Basket({ open, handleClose, items, setItems }) {
   };
 
   const handleOrder = () => {
+    if (!isLoggedIn) {
+      setOpenLoginModal(true);
+      handleClose();
+      return;
+    }
+
     const formData = new FormData();
     formData.set('notes', notes);
     items.forEach((item, index) => {
@@ -48,19 +54,19 @@ function Basket({ open, handleClose, items, setItems }) {
       formData.set(`quantities[${index}]`, item.quantity);
     });
 
-    createOrder(localStorage.getItem('authToken'), formData)
-      .then((response) => {
-        toastr.success(response.data.message);
-        setItems([]);
-        handleClose();
-      })
-      .catch(error => {
-        if (error.response && error.response.status === 422) {
-          toastr.error(error.response.data.message);
+    createOrder(localStorage.getItem('authToken'), formData).
+        then((response) => {
+          toastr.success(response.data.message);
+          setItems([]);
+          handleClose();
+        }).
+        catch(error => {
+          if (error.response && error.response.status === 422) {
+            toastr.error(error.response.data.message);
 
-          return error;
-        }
-      });
+            return error;
+          }
+        });
   };
 
   return <>
@@ -81,11 +87,11 @@ function Basket({ open, handleClose, items, setItems }) {
                            size={'small'}
                            label={'Quantity'}
                            onChange={(e) => handleUpdateQuantity(item,
-                             e.currentTarget.value)}
+                               e.currentTarget.value)}
                            value={item.quantity}/>
                 <Button variant={'outlined'} type={'small'}
                         onClick={() => handleRemoveFromBasket(
-                          item)}>Remove</Button>
+                            item)}>Remove</Button>
               </Stack>;
             })
           }

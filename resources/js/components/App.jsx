@@ -33,6 +33,8 @@ function App() {
   return (
     <>
       <Basket open={openBasket} handleClose={() => setOpenBasket(false)}
+              isLoggedIn={isLoggedIn}
+              setOpenLoginModal={setOpenLoginModal}
               items={itemsInBasket} setItems={setItemsInBasket}/>
 
       <LoginModal open={openLoginModal}
