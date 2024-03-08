@@ -5,6 +5,7 @@ import toastr from 'toastr';
 
 function Basket({open, handleClose, items, setItems, setOpenLoginModal, isLoggedIn}) {
   const [notes, setNotes] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (items.length === 0) {
@@ -47,6 +48,8 @@ function Basket({open, handleClose, items, setItems, setOpenLoginModal, isLogged
       return;
     }
 
+    setIsLoading(true);
+
     const formData = new FormData();
     formData.set('notes', notes);
     items.forEach((item, index) => {
@@ -56,12 +59,14 @@ function Basket({open, handleClose, items, setItems, setOpenLoginModal, isLogged
 
     createOrder(localStorage.getItem('authToken'), formData).
         then((response) => {
+          setIsLoading(false);
           toastr.success(response.data.message);
           setItems([]);
-          // localStorage.removeItem('basket');
+          localStorage.removeItem('basket');
           handleClose();
         }).
         catch(error => {
+          setIsLoading(false);
           if (error.response && error.response.status === 422) {
             toastr.error(error.response.data.message);
 
@@ -102,7 +107,7 @@ function Basket({open, handleClose, items, setItems, setOpenLoginModal, isLogged
 
           <Stack direction={'row'} gap={'8px'}>
             <Button variant={'contained'} type={'small'}
-                    onClick={handleOrder}>Order</Button>
+                    onClick={handleOrder} disabled={isLoading}>Order</Button>
             <Button variant={'outlined'} type={'small'}
                     onClick={() => handleClose()}>Close</Button>
           </Stack>
