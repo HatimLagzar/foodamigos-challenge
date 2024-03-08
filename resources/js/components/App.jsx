@@ -6,6 +6,7 @@ import Navbar from './Navbar/Navbar.jsx';
 import LoginModal from './LoginModal/LoginModal.jsx';
 import RegisterModal from './RegisterModal/RegisterModal.jsx';
 import Basket from './Basket/Basket.jsx';
+import OrderPage from '../pages/Order/OrderPage.jsx';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -51,6 +52,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path={'/'} element={<HomePage isLoggedIn={isLoggedIn}
+                                               itemsInBasket={itemsInBasket}
+                                               setItemsInBasket={setItemsInBasket}
+                                               setIsLoggedIn={setIsLoggedIn}/>}/>
+          <Route path={'/orders/:id'} element={<OrderPage isLoggedIn={isLoggedIn}
                                                itemsInBasket={itemsInBasket}
                                                setItemsInBasket={setItemsInBasket}
                                                setIsLoggedIn={setIsLoggedIn}/>}/>

@@ -15,10 +15,12 @@ class Order extends Model
     public const USER_ID_COLUMN = 'user_id';
     public const NOTES_COLUMN = 'notes';
     public const TOTAL_COLUMN = 'total';
+    public const PRODUCT_ID_COLUMN = 'product_id';
 
     protected $fillable = [
       self::USER_ID_COLUMN,
       self::NOTES_COLUMN,
+      self::PRODUCT_ID_COLUMN,
       self::TOTAL_COLUMN,
     ];
 
@@ -31,6 +33,4 @@ class Order extends Model
     {
         $this->items = $items;
     }
-
-
 }

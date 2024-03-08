@@ -22,4 +22,14 @@ class OrderItem extends Model
       self::QUANTITY_COLUMN,
       self::PRODUCT_ID_COLUMN,
     ];
+
+    public function getProductId(): int
+    {
+        return $this->getAttribute(self::PRODUCT_ID_COLUMN);
+    }
+
+    public function setProduct(?Product $product): void
+    {
+        $this->product = $product;
+    }
 }
