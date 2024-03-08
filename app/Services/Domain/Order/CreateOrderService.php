@@ -2,6 +2,7 @@
 
 namespace App\Services\Domain\Order;
 
+use App\Mail\OrderCreated;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
@@ -11,6 +12,7 @@ use App\Services\Core\OrderItem\OrderItemService;
 use App\Services\Core\Product\ProductService;
 use App\Services\Domain\Order\Exceptions\OrderBelowMinimumTotalException;
 use App\Services\Domain\Order\Exceptions\ProductNotFoundException;
+use Illuminate\Support\Facades\Mail;
 
 class CreateOrderService
 {
@@ -71,6 +73,9 @@ class CreateOrderService
         }
 
         $this->orderService->update($order, [Order::TOTAL_COLUMN => $total]);
+
+        $order = $this->orderService->findById($order->getId()); // To get the order hydrated and benefit again from caching system
+        Mail::to(config('mail.to.admin_email'))->send(new OrderCreated($order, $user));
 
         return true;
     }

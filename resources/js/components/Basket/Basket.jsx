@@ -58,6 +58,7 @@ function Basket({open, handleClose, items, setItems, setOpenLoginModal, isLogged
         then((response) => {
           toastr.success(response.data.message);
           setItems([]);
+          // localStorage.removeItem('basket');
           handleClose();
         }).
         catch(error => {
