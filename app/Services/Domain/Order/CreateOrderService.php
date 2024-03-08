@@ -41,12 +41,13 @@ class CreateOrderService
         $order = $this->orderService->create([Order::USER_ID_COLUMN => $user->getId(), Order::NOTES_COLUMN => $notes, Order::TOTAL_COLUMN => 0]);
         $total = 0;
         foreach ($productIds as $index => $productId) {
+            $quantity = $quantities[$index];
             $product = $this->productService->findById($productId);
             if (!$product instanceof Product) {
                 throw new ProductNotFoundException();
             }
 
-            $total += $product->getPrice();
+            $total += $product->getPrice() * $quantity;
         }
 
         if ($total < 15) {
@@ -60,7 +61,7 @@ class CreateOrderService
                 throw new ProductNotFoundException();
             }
 
-            $total += $product->getPrice();
+            $total += $product->getPrice() * $quantity;
 
             $this->orderItemService->create([
               OrderItem::ORDER_ID_COLUMN => $order->getId(),

@@ -23,6 +23,7 @@ function LoginModal({ open, handleClose, setIsLoggedIn }) {
       setPassword('');
       setIsLoggedIn(true);
       handleClose();
+      document.location.href = document.location.href
     });
   }
 
