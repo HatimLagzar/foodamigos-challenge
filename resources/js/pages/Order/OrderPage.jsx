@@ -26,6 +26,7 @@ function OrderPage({}) {
               <Stack direction={'column'} gap={'8px'}>
                 <Typography>Total Price: {orderData.order.total} EUR</Typography>
                 <Typography>Notes: {orderData.order.notes}</Typography>
+                <Typography>Notes: {orderData.order.created_at}</Typography>
               </Stack>
 
               <Stack direction={'column'} gap={'8px'}>
